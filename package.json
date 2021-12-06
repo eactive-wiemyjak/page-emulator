@@ -1,0 +1,21 @@
+{
+    "name": "page-emulator",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "download": "node download",
+        "serve": "node serve",
+        "clear": "node clear",
+        "start": "npm run download && npm run serve && npm run clear"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "compression": "^1.7.4",
+        "express": "^4.17.1",
+        "jsdom": "^19.0.0",
+        "puppeteer": "^12.0.1"
+    }
+}
