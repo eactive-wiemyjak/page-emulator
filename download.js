@@ -3,7 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
 
-const url = 'https://www.hardreset.info';
+const url =
+    'https://www.hardreset.info/fr/devices/xiaomi/xiaomi-redmi-note-8-pro/faq/faq/dnd-mode-xiaomi/';
 
 async function download(url) {
     const list = [];
@@ -15,6 +16,7 @@ async function download(url) {
         page.on('response', async (res) => {
             const urlParsed = new URL(res.url());
             if (!res.ok()) return;
+            if (!urlParsed.protocol.match(/^https?:$/)) return;
             if (baseUrlParsed.origin !== urlParsed.origin) return;
             const fullPath = urlParsed.pathname.slice(1).split('/');
             const fileName = fullPath[fullPath.length - 1].match('.')
