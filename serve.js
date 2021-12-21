@@ -3,18 +3,23 @@ const { JSDOM } = require('jsdom');
 const fs = require('fs');
 const app = express();
 const compression = require('compression');
-const url = require('./download');
+const url = require('./url');
 const { URL } = require('url');
 
 const port = process.env.port || 3456;
 
-const origin = new URL(url).origin;
+const parsedUrl = new URL(url);
+const origin = parsedUrl.origin;
+const path = parsedUrl.pathname;
 
 app.use(compression());
 
-app.get('/', (req, res) => {
-    const { document } = new JSDOM(fs.readFileSync('./public/index.html'))
-        .window;
+app.get(path, (req, res) => {
+    const { document } = new JSDOM(
+        fs.readFileSync(
+            `./public${path}${path.endsWith('/') ? '/index.html' : ''}`
+        )
+    ).window;
 
     document.querySelectorAll('a,link,img,script,source').forEach((element) => {
         if (!element.src && !element.href) return;
@@ -40,4 +45,4 @@ app.get('/', (req, res) => {
 
 app.use(express.static('public'));
 
-app.listen(port, () => console.log(`http://127.0.0.1:${port}`));
+app.listen(port, () => console.log(`http://127.0.0.1:${port}${path}`));

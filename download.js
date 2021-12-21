@@ -2,9 +2,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
-
-const url =
-    'https://www.hardreset.info/fr/devices/xiaomi/xiaomi-redmi-note-8-pro/faq/faq/dnd-mode-xiaomi/';
+const url = require('./url');
 
 async function download(url) {
     const list = [];
