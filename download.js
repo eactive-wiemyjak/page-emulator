@@ -33,7 +33,7 @@ async function download(url) {
             fs.writeFileSync(filePath, await res.buffer());
         });
 
-        await page.emulate(puppeteer.devices['Nexus 5X']);
+        await page.emulate(puppeteer.devices['Galaxy S5']);
 
         await page.goto(url, { waitUntil: 'networkidle2' });
 

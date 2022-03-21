@@ -4,8 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "webpack": "webpack watch",
         "download": "node download",
-        "serve": "node serve",
+        "serve": "nodemon serve",
         "clear": "node clear",
         "start": "npm run download && npm run serve && npm run clear"
     },
@@ -14,8 +15,13 @@
     "license": "ISC",
     "dependencies": {
         "compression": "^1.7.4",
+        "critical": "^4.0.1",
+        "css": "^3.0.0",
         "express": "^4.17.1",
         "jsdom": "^19.0.0",
-        "puppeteer": "^12.0.1"
+        "nodemon": "^2.0.15",
+        "puppeteer": "^12.0.1",
+        "webpack": "^5.70.0",
+        "webpack-cli": "^4.9.2"
     }
 }
