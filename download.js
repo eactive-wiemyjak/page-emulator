@@ -12,25 +12,27 @@ async function download(url) {
         const page = await browser.newPage();
 
         page.on('response', async (res) => {
-            const urlParsed = new URL(res.url());
-            if (!res.ok()) return;
-            if (!urlParsed.protocol.match(/^https?:$/)) return;
-            if (baseUrlParsed.origin !== urlParsed.origin) return;
-            const fullPath = urlParsed.pathname.slice(1).split('/');
-            const fileName = fullPath[fullPath.length - 1].match('.')
-                ? fullPath[fullPath.length - 1]
-                : 'index.html';
-            const pathToFileArray = fullPath[fullPath.length - 1].match('.')
-                ? fullPath.slice(0, -1)
-                : [...fullPath];
+            try {
+                const urlParsed = new URL(res.url());
+                if (!res.ok()) return;
+                if (!urlParsed.protocol.match(/^https?:$/)) return;
+                if (baseUrlParsed.origin !== urlParsed.origin) return;
+                const fullPath = urlParsed.pathname.slice(1).split('/');
+                const fileName = fullPath[fullPath.length - 1].match('.')
+                    ? fullPath[fullPath.length - 1]
+                    : 'index.html';
+                const pathToFileArray = fullPath[fullPath.length - 1].match('.')
+                    ? fullPath.slice(0, -1)
+                    : [...fullPath];
 
-            const pathToFile = path.join('public', ...pathToFileArray);
-            const filePath = path.join(pathToFile, fileName);
+                const pathToFile = path.join('public', ...pathToFileArray);
+                const filePath = path.join(pathToFile, fileName);
 
-            if (!fs.existsSync(pathToFile))
-                fs.mkdirSync(pathToFile, { recursive: true });
+                if (!fs.existsSync(pathToFile))
+                    fs.mkdirSync(pathToFile, { recursive: true });
 
-            fs.writeFileSync(filePath, await res.buffer());
+                fs.writeFileSync(filePath, await res.buffer());
+            } catch (err) {}
         });
 
         await page.emulate(puppeteer.devices['Galaxy S5']);
